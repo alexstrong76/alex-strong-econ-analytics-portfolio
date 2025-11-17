@@ -1,6 +1,57 @@
-# Economics & Analytics Portfolio — Alex Strong
+<!-- ============================= -->
+<!-- HEADER + BADGES -->
+<!-- ============================= -->
 
-This repository showcases academic and professional projects at the intersection of **economics**, **data science**, and **labor policy**.
+# Economics & Analytics Portfolio — Alex Strong  
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![Build](https://img.shields.io/badge/Build-Passing-success.svg)
+![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)
+![Made with Jupyter](https://img.shields.io/badge/Made%20with-Jupyter-orange.svg)
+![Data Science](https://img.shields.io/badge/Focus-Econometrics%20%7C%20Labor%20Analytics-lightgrey.svg)
+![Open Source](https://img.shields.io/badge/Open%20Source-Contributions%20Welcome-brightgreen.svg)
+![Status](https://img.shields.io/badge/Status-Active-success.svg)
+
+---
+
+## 🌍 Overview  
+
+This portfolio showcases **academic and professional analytics projects** bridging *economics, data science,* and *labor policy*.  
+Each project demonstrates an applied approach to modeling, analysis, and storytelling through data — ranging from macroeconomic simulations to compliance analytics.
+
+**Key themes:**
+- **Economic modeling:** Solow growth, CES demand, econometric regression, ARIMA forecasting  
+- **Labor & policy analytics:** Wage-gap regression, synthetic Department of Labor “Wage & Hour” audit data  
+- **Applied research methods:** OLS estimation, causal analysis foundations, time-series decomposition  
+- **Data tools:** Python, pandas, NumPy, scikit-learn, statsmodels, Jupyter, Tableau-ready data outputs  
+
+> All data are **synthetic** and created for educational or demonstration purposes only.
+
+---
+
+## 🚀 Quickstart  
+
+```bash
+# 1️⃣ Clone the repo
+git clone https://github.com/<your-username>/alex-strong-econ-analytics-portfolio.git
+cd alex-strong-econ-analytics-portfolio
+
+# 2️⃣ Create & activate virtual environment
+python -m venv .venv && source .venv/bin/activate
+
+# 3️⃣ Install dependencies
+pip install -r requirements.txt
+pip install -r dev-requirements.txt   # optional
+
+# 4️⃣ Generate example datasets & notebooks
+make data
+make nb
+
+# 5️⃣ Run sample models
+make examples
+
+---
 
 **Highlights**
 - Macroeconomics & Microeconomics modeling (Solow, CES demand)
