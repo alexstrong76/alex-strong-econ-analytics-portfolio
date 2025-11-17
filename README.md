@@ -76,7 +76,7 @@ python labor_econ/wage_gap_analysis/wage_gap.py
 python labor_law_compliance/wage_hour_audit/wage_hour_audit.py
 python bls_programs/qcew_ces_mock/qcew_ces_mock.py
 
-## Structure 
+## Repository Structure
 macro_models/
   solow_growth/
 micro_models/
@@ -91,6 +91,10 @@ labor_law_compliance/
   wage_hour_audit/
 bls_programs/
   qcew_ces_mock/
+data/
+  processed/
+notebooks/
+tools/
 
 ## License 
 ## Python requirements (`requirements.txt`)
@@ -100,3 +104,16 @@ numpy
 matplotlib
 scikit-learn
 statsmodels
+
+🧠 Learn More
+🧮 Econometrics: Classic OLS + modern scikit-learn regression examples
+📈 Macroeconomics: Solow-style convergence visualization
+⚙️ Policy analytics: Wage-and-hour audit modeling for compliance insights
+📊 Visualization: Outputs compatible with Tableau and Power BI
+🤝 Contributing
+
+Pull requests, issues, and suggestions are welcome!
+Please ensure code is formatted with Black and passes flake8 linting before submitting.
+
+🪪 License
+This project is distributed under the MIT License — see LICENSE for details.
