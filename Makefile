@@ -234,6 +234,9 @@ make setup
 make nb          # builds the 3 notebooks under notebooks/
 make data        # builds BI CSVs under data/processed/
 make examples    # runs a few scripts end-to-end
+make nb-addons     # build IV & DiD notebooks
+make data-more     # write new CSVs to data/processed/
+make test          # run unit tests
 
 
 
