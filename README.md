@@ -95,6 +95,36 @@ data/
   processed/
 notebooks/
 tools/
+econometrics/
+  lpm_logit_probit/
+    README.md
+    binary_models.py
+  iv_2sls/
+    README.md
+    iv_2sls.py
+  panel_fixed_random/
+    README.md
+    panel_fe_re.py
+  diff_in_diff/
+    README.md
+    did_basic.py
+  rd_design/
+    README.md
+    rd_local_linear.py
+  psm_matching/
+    README.md
+    psm_demo.py
+  heteroskedasticity_robust_inference/
+    README.md
+    robust_se_diagnostics.py
+time_series/
+  var_irf_cointegration/
+    README.md
+    var_irf_coint.py
+  garch_volatility/
+    README.md
+    garch_demo.py
+
 
 ## License 
 ## Python requirements (`requirements.txt`)
