@@ -235,6 +235,8 @@ make nb          # builds the 3 notebooks under notebooks/
 make data        # builds BI CSVs under data/processed/
 make examples    # runs a few scripts end-to-end
 
-git bundle unbundle ~/Downloads/econ_portfolio_addons
+/Users/alex/repos/econ-analytics-portfolio/
+C:\Users\Alex\Documents\GitHub\econ-analytics-portfolio\
+
 
 
