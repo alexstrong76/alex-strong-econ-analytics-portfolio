@@ -71,10 +71,20 @@ pip install -r requirements.txt
 python macro_models/solow_growth/solow.py
 python micro_models/ces_demand/ces_utility.py
 python econometrics/linear_regression/ols_sklearn.py
+python econometrics/lpm_logit_probit/binary_models.py
+python econometrics/iv_2sls/iv_2sls.py
+python econometrics/panel_fixed_random/panel_fe_re.py
+python econometrics/diff_in_diff/did_basic.py
+python econometrics/rd_design/rd_local_linear.py
+python econometrics/psm_matching/psm_demo.py
+python econometrics/heteroskedasticity_robust_inference/robust_se_diagnostics.py
 python time_series/arima_gdp/arima_simulated.py
+python time_series/var_irf_cointegration/var_irf_coint.py
+python time_series/garch_volatility/garch_demo.py
 python labor_econ/wage_gap_analysis/wage_gap.py
 python labor_law_compliance/wage_hour_audit/wage_hour_audit.py
 python bls_programs/qcew_ces_mock/qcew_ces_mock.py
+
 
 ## Repository Structure
 macro_models/
@@ -83,19 +93,6 @@ micro_models/
   ces_demand/
 econometrics/
   linear_regression/
-time_series/
-  arima_gdp/
-labor_econ/
-  wage_gap_analysis/
-labor_law_compliance/
-  wage_hour_audit/
-bls_programs/
-  qcew_ces_mock/
-data/
-  processed/
-notebooks/
-tools/
-econometrics/
   lpm_logit_probit/
     README.md
     binary_models.py
@@ -118,13 +115,23 @@ econometrics/
     README.md
     robust_se_diagnostics.py
 time_series/
+  arima_gdp/
   var_irf_cointegration/
     README.md
     var_irf_coint.py
   garch_volatility/
     README.md
     garch_demo.py
-
+labor_econ/
+  wage_gap_analysis/
+labor_law_compliance/
+  wage_hour_audit/
+bls_programs/
+  qcew_ces_mock/
+data/
+  processed/
+notebooks/
+tools/
 
 ## License 
 ## Python requirements (`requirements.txt`)
