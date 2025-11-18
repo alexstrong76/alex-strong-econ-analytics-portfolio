@@ -137,6 +137,19 @@ data/
 notebooks/
 tools/
 
+## Dashboards & BI (Tableau / Power BI)
+
+This repo includes synthetic CSVs under `data/processed/` designed for BI demos:
+
+- Labor Market & Wage Analytics: `wages_synthetic.csv`, `panel_sim.csv`, `employment_qcew_mock.csv`
+- Compliance & Timesheet Analytics: `timesheets_synthetic.csv`, `matched_psm_source.csv`, `rd_sim.csv`
+- Macro & Time-Series Behavior: `gdp_growth_synthetic.csv`, `var_cointegration.csv`, `garch_like_returns.csv`
+
+Example storyboard ideas:
+- Wage distributions, adjusted gaps, and industry premia
+- Overtime risk, rounding patterns, and department-level exposure
+- Growth paths, cointegrated series, and volatility clustering
+
 ## License 
 ## Python requirements (`requirements.txt`)
 ```txt
