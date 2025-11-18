@@ -134,6 +134,8 @@ numpy
 matplotlib
 scikit-learn
 statsmodels
+linearmodels
+arch
 
 Learn More
 Econometrics: Classic OLS + modern scikit-learn regression examples
