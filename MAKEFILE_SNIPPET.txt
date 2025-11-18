@@ -1,0 +1,13 @@
+
+# Add to your existing Makefile
+.PHONY: nb-addons
+nb-addons:  ## Build extra demo notebooks (IV & DID)
+	$(PYBIN) tools/make_notebooks_addons.py
+
+.PHONY: data-more
+data-more:  ## Generate additional synthetic CSVs for BI demos
+	$(PYBIN) data/seed_more_datasets.py
+
+.PHONY: test
+test:  ## Run unit tests
+	$(VENV)/bin/pytest -q
