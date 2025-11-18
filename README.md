@@ -15,7 +15,7 @@
 
 ---
 
-## 🌍 Overview  
+## Overview  
 
 This portfolio showcases **academic and professional analytics projects** bridging *economics, data science,* and *labor policy*.  
 Each project demonstrates an applied approach to modeling, analysis, and storytelling through data — ranging from macroeconomic simulations to compliance analytics.
@@ -30,25 +30,25 @@ Each project demonstrates an applied approach to modeling, analysis, and storyte
 
 ---
 
-## 🚀 Quickstart  
+## Quickstart  
 
 ```bash
-# 1️⃣ Clone the repo
+# 1 Clone the repo
 git clone https://github.com/<your-username>/alex-strong-econ-analytics-portfolio.git
 cd alex-strong-econ-analytics-portfolio
 
-# 2️⃣ Create & activate virtual environment
+# 2 Create & activate virtual environment
 python -m venv .venv && source .venv/bin/activate
 
-# 3️⃣ Install dependencies
+# 3 Install dependencies
 pip install -r requirements.txt
 pip install -r dev-requirements.txt   # optional
 
-# 4️⃣ Generate example datasets & notebooks
+# 4 Generate example datasets & notebooks
 make data
 make nb
 
-# 5️⃣ Run sample models
+# 5 Run sample models
 make examples
 
 ---
@@ -105,15 +105,15 @@ matplotlib
 scikit-learn
 statsmodels
 
-🧠 Learn More
-🧮 Econometrics: Classic OLS + modern scikit-learn regression examples
-📈 Macroeconomics: Solow-style convergence visualization
-⚙️ Policy analytics: Wage-and-hour audit modeling for compliance insights
-📊 Visualization: Outputs compatible with Tableau and Power BI
-🤝 Contributing
+Learn More
+Econometrics: Classic OLS + modern scikit-learn regression examples
+Macroeconomics: Solow-style convergence visualization
+Policy analytics: Wage-and-hour audit modeling for compliance insights
+Visualization: Outputs compatible with Tableau and Power BI
+Contributing
 
 Pull requests, issues, and suggestions are welcome!
 Please ensure code is formatted with Black and passes flake8 linting before submitting.
 
-🪪 License
+License
 This project is distributed under the MIT License — see LICENSE for details.
