@@ -18,3 +18,5 @@ X = sm.add_constant(np.c_[local["x"], local["t"], local["x"]*local["t"]])
 res = sm.OLS(local["y"], X).fit(cov_type="HC1")
 print(res.summary())
 print("\nLocal RD (t coefficient):", res.params[2])
+
+
