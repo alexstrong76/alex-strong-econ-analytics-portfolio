@@ -7,11 +7,15 @@
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Build](https://img.shields.io/badge/Build-Passing-success.svg)
+![Tests](https://img.shields.io/badge/Tests-passing-brightgreen.svg)
+![Notebooks](https://img.shields.io/badge/Notebooks-available-blueviolet.svg)
 ![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)
 ![Made with Jupyter](https://img.shields.io/badge/Made%20with-Jupyter-orange.svg)
 ![Data Science](https://img.shields.io/badge/Focus-Econometrics%20%7C%20Labor%20Analytics-lightgrey.svg)
 ![Open Source](https://img.shields.io/badge/Open%20Source-Contributions%20Welcome-brightgreen.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success.svg)
+
+> Pytest unit tests for key econometrics modules, and example Jupyter notebooks for IV/2SLS and Difference-in-Differences.
 
 ---
 
