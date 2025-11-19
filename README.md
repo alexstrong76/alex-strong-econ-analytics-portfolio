@@ -31,6 +31,10 @@ Each project demonstrates an applied approach to modeling, analysis, and storyte
 - **Data tools:** Python, pandas, NumPy, scikit-learn, statsmodels, Jupyter, Tableau-ready data outputs  
 
 > All data are **synthetic** and created for educational or demonstration purposes only.
+>
+> Code tested and run using GitHub Codespaces
+> Data for dashboards in data/processed/
+> Dashboards built externally in Tableau using these CSVs
 
 ---
 
@@ -41,7 +45,7 @@ Each project demonstrates an applied approach to modeling, analysis, and storyte
 git clone https://github.com/<your-username>/alex-strong-econ-analytics-portfolio.git
 cd alex-strong-econ-analytics-portfolio
 
-# 2) (Recommended) Create & activate a virtual environment
+# 2) Create & activate a virtual environment
 python -m venv .venv
 # macOS/Linux:
 source .venv/bin/activate
@@ -95,7 +99,7 @@ labor_law_compliance/
 bls_programs/
   └── qcew_ces_mock/
 data/
-  └── processed/          # synthetic CSVs for BI demos
+  └── processed/          
 notebooks/
 tools/
 .github/
@@ -128,4 +132,5 @@ PRs and issues welcome. Please format with Black and pass flake8 before submitti
 
 License
 MIT License — see LICENSE for details.
+
 
