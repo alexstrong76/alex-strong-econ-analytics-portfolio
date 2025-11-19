@@ -161,6 +161,93 @@ arch
 numpy>=1.24,<3.0
 pandas>=2.0,<3.0
 
+# ================================
+# File: main.py  (repo root)
+# ================================
+"""
+Minimal script to generate a CSV into outputs/data.csv.
+"""
+from __future__ import annotations
+from pathlib import Path
+import csv
+
+def run() -> int:
+    out = Path("outputs"); out.mkdir(parents=True, exist_ok=True)
+    path = out / "data.csv"
+    rows = [{"id": 1, "name": "alpha"}, {"id": 2, "name": "beta"}]
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=["id", "name"])
+        w.writeheader(); w.writerows(rows)
+    print(f"Wrote {path} ({len(rows)} rows)")
+    return 0
+
+if __name__ == "__main__":
+    raise SystemExit(run())
+# =========================================================
+# File: .github/workflows/python.yml  (YAML only here)
+# =========================================================
+name: Python CI
+
+on:
+  workflow_dispatch:
+  push:
+
+permissions:
+  contents: write   # needed only if you keep the commit step
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+
+      - name: Install dependencies (if requirements.txt exists)
+        if: ${{ hashFiles('requirements.txt') != '' }}
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Lint only real project code; skip .github contents
+      - name: Lint with flake8 (skip if no project .py files)
+        run: |
+          set -e
+          files="$(git ls-files '*.py' | grep -v '^\.github/' || true)"
+          if [ -z "$files" ]; then
+            echo "No Python files to lint outside .github/; skipping flake8."
+            exit 0
+          fi
+          python -m pip install flake8
+          flake8 $files
+
+      - name: Run script
+        run: python main.py
+
+      - name: Upload CSVs
+        uses: actions/upload-artifact@v4
+        with:
+          name: csv-output
+          path: outputs/**/*.csv
+          if-no-files-found: error
+
+      # Optional: commit CSVs back to the repo
+      - name: Commit CSVs (optional)
+        if: ${{ always() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add outputs/**/*.csv || true
+          git diff --cached --quiet || (git commit -m "chore: update CSVs [skip ci]" && git push)
+# File: .flake8
+[flake8]
+exclude = .git,__pycache__,.github,venv,env
+max-line-length = 100
 
 # B) If you want the "Python package" workflow, use this FIXED variant.
 # It won’t fail if deps/tests are missing.
