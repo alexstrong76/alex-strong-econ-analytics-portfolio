@@ -161,35 +161,6 @@ arch
 numpy>=1.24,<3.0
 pandas>=2.0,<3.0
 
-# ================================
-# File: requirements.txt
-# ================================
-numpy>=1.24,<3.0
-
-# ================================
-# File: main.py
-# ================================
-"""
-Minimal runnable script.
-WHY: Confirms Python env + dependency install works in CI.
-"""
-from __future__ import annotations
-
-import sys
-import numpy as np
-
-
-def run() -> int:
-    # small deterministic computation so CI output is stable
-    arr = np.array([1, 2, 3, 4], dtype=float)
-    mean = float(arr.mean())
-    print(f"NumPy OK. mean({arr.tolist()}) = {mean}")
-    return 0  # non-zero would fail CI
-
-
-if __name__ == "__main__":
-    sys.exit(run())
-
 Learn More
 Econometrics: Classic OLS + modern scikit-learn regression examples
 Macroeconomics: Solow-style convergence visualization
