@@ -153,8 +153,6 @@ Example storyboard ideas:
 ## License 
 ## Python requirements (`requirements.txt`)
 ```txt
-pandas
-numpy
 matplotlib
 scikit-learn
 statsmodels
