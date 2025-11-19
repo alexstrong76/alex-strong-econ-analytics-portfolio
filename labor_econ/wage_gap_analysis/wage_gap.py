@@ -50,8 +50,12 @@ def main():
     X = pd.get_dummies(df[["years_exp", "edu", "gender", "industry"]], drop_first=True)
     X = sm.add_constant(X)
 
+    # 🔧 Make sure everything is numeric (this fixes your error)
+    X = X.astype(float)
+    y = df["wage"].astype(float)
+
     # OLS regression
-    model = sm.OLS(df["wage"], X).fit()
+    model = sm.OLS(y, X).fit()
     print(model.summary())
 
     # Save data for Tableau dashboards
