@@ -162,6 +162,50 @@ Example storyboard ideas:
 # scipy>=1.10,<2.0
 # statsmodels>=0.14,<0.15
 
+# =========================================
+# File: .github/workflows/python-package.yml
+# (Replace the auto-generated one)
+# =========================================
+name: Python Package
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "requirements.txt not found; installing minimal deps"
+            pip install numpy
+          fi
+
+      - name: Run pytest (only if tests/ exists)
+        if: ${{ hashFiles('tests/**') != '' }}
+        run: |
+          python -m pip install pytest
+          pytest -q
+
+
 # ================================
 # File: main.py  (repo root)
 # ================================
