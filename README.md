@@ -34,340 +34,98 @@ Each project demonstrates an applied approach to modeling, analysis, and storyte
 
 ---
 
-## Quickstart  
+## Quickstart
 
 ```bash
-# 1 Clone the repo
+# 1) Clone
 git clone https://github.com/<your-username>/alex-strong-econ-analytics-portfolio.git
 cd alex-strong-econ-analytics-portfolio
 
-# 2 Create & activate virtual environment
-python -m venv .venv && source .venv/bin/activate
+# 2) (Recommended) Create & activate a virtual environment
+python -m venv .venv
+# macOS/Linux:
+source .venv/bin/activate
+# Windows (PowerShell):
+# .venv\Scripts\Activate.ps1
 
-# 3 Install dependencies
-pip install -r requirements.txt
-pip install -r dev-requirements.txt   # optional
-
-# 4 Generate example datasets & notebooks
-make data
-make nb
-
-# 5 Run sample models
-make examples
-
----
-
-**Highlights**
-- Macroeconomics & Microeconomics modeling (Solow, CES demand)
-- Econometrics (OLS), **time series** (ARIMA)
-- **Labor economics**: wage gap analysis, BLS-style employment trends
-- **Wage & Hour** compliance analytics (synthetic data)
-
-> All datasets here are **synthetic**, for demonstration only.
-
-## Quickstart
-```bash
-# create & activate a virtual environment (optional)
-python -m venv .venv && source .venv/bin/activate
+# 3) Install dependencies
 pip install -r requirements.txt
 
-# run a project
+# 4) Run example scripts
 python macro_models/solow_growth/solow.py
 python micro_models/ces_demand/ces_utility.py
-python econometrics/linear_regression/ols_sklearn.py
-python econometrics/lpm_logit_probit/binary_models.py
+
+# Econometrics (examples)
 python econometrics/iv_2sls/iv_2sls.py
-python econometrics/panel_fixed_random/panel_fe_re.py
 python econometrics/diff_in_diff/did_basic.py
-python econometrics/rd_design/rd_local_linear.py
-python econometrics/psm_matching/psm_demo.py
 python econometrics/heteroskedasticity_robust_inference/robust_se_diagnostics.py
+
+# Time series (examples)
 python time_series/arima_gdp/arima_simulated.py
 python time_series/var_irf_cointegration/var_irf_coint.py
 python time_series/garch_volatility/garch_demo.py
+
+# Labor & compliance (examples)
 python labor_econ/wage_gap_analysis/wage_gap.py
 python labor_law_compliance/wage_hour_audit/wage_hour_audit.py
 python bls_programs/qcew_ces_mock/qcew_ces_mock.py
 
-
-## Repository Structure
+## Repository Structure 
 macro_models/
-  solow_growth/
+  └── solow_growth/
 micro_models/
-  ces_demand/
+  └── ces_demand/
 econometrics/
-  linear_regression/
-  lpm_logit_probit/
-    README.md
-    binary_models.py
-  iv_2sls/
-    README.md
-    iv_2sls.py
-  panel_fixed_random/
-    README.md
-    panel_fe_re.py
-  diff_in_diff/
-    README.md
-    did_basic.py
-  rd_design/
-    README.md
-    rd_local_linear.py
-  psm_matching/
-    README.md
-    psm_demo.py
-  heteroskedasticity_robust_inference/
-    README.md
-    robust_se_diagnostics.py
+  ├── linear_regression/
+  ├── lpm_logit_probit/
+  ├── iv_2sls/
+  ├── panel_fixed_random/
+  ├── diff_in_diff/
+  ├── rd_design/
+  ├── psm_matching/
+  └── heteroskedasticity_robust_inference/
 time_series/
-  arima_gdp/
-  var_irf_cointegration/
-    README.md
-    var_irf_coint.py
-  garch_volatility/
-    README.md
-    garch_demo.py
+  ├── arima_gdp/
+  ├── var_irf_cointegration/
+  └── garch_volatility/
 labor_econ/
-  wage_gap_analysis/
+  └── wage_gap_analysis/
 labor_law_compliance/
-  wage_hour_audit/
+  └── wage_hour_audit/
 bls_programs/
-  qcew_ces_mock/
+  └── qcew_ces_mock/
 data/
-  processed/
+  └── processed/          # synthetic CSVs for BI demos
 notebooks/
 tools/
+.github/
+  └── workflows/
 
-## Dashboards & BI (Tableau / Power BI)
+## Requirements <requirements.txt>
+numpy>=1.24,<3.0
+pandas>=2.0,<3.0
+scipy>=1.10,<2.0
+statsmodels>=0.14,<0.15
+scikit-learn
+matplotlib
+arch
+linearmodels
 
-This repo includes synthetic CSVs under `data/processed/` designed for BI demos:
+Testing & Linting
+# Tests (if tests/ exists)
+python -m pip install pytest
+pytest -q
 
-- Labor Market & Wage Analytics: `wages_synthetic.csv`, `panel_sim.csv`, `employment_qcew_mock.csv`
-- Compliance & Timesheet Analytics: `timesheets_synthetic.csv`, `matched_psm_source.csv`, `rd_sim.csv`
-- Macro & Time-Series Behavior: `gdp_growth_synthetic.csv`, `var_cointegration.csv`, `garch_like_returns.csv`
-
-Example storyboard ideas:
-- Wage distributions, adjusted gaps, and industry premia
-- Overtime risk, rounding patterns, and department-level exposure
-- Growth paths, cointegrated series, and volatility clustering
-
-## License 
-## Python requirements (`requirements.txt`)
-```txt
-# matplotlib
-# scikit-learn
-# linearmodels
-# arch
-# numpy>=1.24,<3.0
-# pandas>=2.0,<3.0
-# scipy>=1.10,<2.0
-# statsmodels>=0.14,<0.15
-
-# =========================================
-# File: .github/workflows/python-package.yml
-# (Replace the auto-generated one)
-# =========================================
-name: Python Package
-
-on:
-  push:
-  pull_request:
-  workflow_dispatch:
-
-permissions:
-  contents: read
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-          cache: pip
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          else
-            echo "requirements.txt not found; installing minimal deps"
-            pip install numpy
-          fi
-
-      - name: Run pytest (only if tests/ exists)
-        if: ${{ hashFiles('tests/**') != '' }}
-        run: |
-          python -m pip install pytest
-          pytest -q
-
-
-# ================================
-# File: main.py  (repo root)
-# ================================
-"""
-Minimal script to generate a CSV into outputs/data.csv.
-"""
-from __future__ import annotations
-from pathlib import Path
-import csv
-
-def run() -> int:
-    out = Path("outputs"); out.mkdir(parents=True, exist_ok=True)
-    path = out / "data.csv"
-    rows = [{"id": 1, "name": "alpha"}, {"id": 2, "name": "beta"}]
-    with path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["id", "name"])
-        w.writeheader(); w.writerows(rows)
-    print(f"Wrote {path} ({len(rows)} rows)")
-    return 0
-
-if __name__ == "__main__":
-    raise SystemExit(run())
-# =========================================================
-# File: .github/workflows/python.yml  (YAML only here)
-# =========================================================
-name: Python CI
-
-on:
-  workflow_dispatch:
-  push:
-
-permissions:
-  contents: write   # needed only if you keep the commit step
-
-jobs:
-  run:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-          cache: pip
-
-      - name: Install dependencies (if requirements.txt exists)
-        if: ${{ hashFiles('requirements.txt') != '' }}
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      # Lint only real project code; skip .github contents
-      - name: Lint with flake8 (skip if no project .py files)
-        run: |
-          set -e
-          files="$(git ls-files '*.py' | grep -v '^\.github/' || true)"
-          if [ -z "$files" ]; then
-            echo "No Python files to lint outside .github/; skipping flake8."
-            exit 0
-          fi
-          python -m pip install flake8
-          flake8 $files
-
-      - name: Run script
-        run: python main.py
-
-      - name: Upload CSVs
-        uses: actions/upload-artifact@v4
-        with:
-          name: csv-output
-          path: outputs/**/*.csv
-          if-no-files-found: error
-
-      # Optional: commit CSVs back to the repo
-      - name: Commit CSVs (optional)
-        if: ${{ always() }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add outputs/**/*.csv || true
-          git diff --cached --quiet || (git commit -m "chore: update CSVs [skip ci]" && git push)
-# File: .flake8
+# Lint
+python -m pip install flake8
+flake8 .
 [flake8]
 exclude = .git,__pycache__,.github,venv,env
 max-line-length = 100
 
-# B) If you want the "Python package" workflow, use this FIXED variant.
-# It won’t fail if deps/tests are missing.
-# File: .github/workflows/python-package.yml
-name: Python Package
-
-on:
-  workflow_dispatch:
-  push:
-  pull_request:
-
-permissions:
-  contents: read
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.10"]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: pip
-
-      # Install from requirements.txt if present
-      - name: Install dependencies (requirements.txt)
-        if: ${{ hashFiles('requirements.txt') != '' }}
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      # Install editable package if pyproject.toml exists
-      - name: Install package (pyproject)
-        if: ${{ hashFiles('pyproject.toml') != '' }}
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e .
-
-      # Only run pytest if tests exist
-      - name: Run tests
-        if: ${{ hashFiles('tests/**') != '' }}
-        run: |
-          python -m pip install pytest
-          pytest -q
-# File: tests/test_smoke.py  (optional, makes the package template go green)
-def test_smoke() -> None:
-    assert 1 + 1 == 2
-# OPTIONAL packaging (only if you care to be a package)
-# File: pyproject.toml
-[build-system]
-requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[project]
-name = "my-repo"
-version = "0.0.1"
-requires-python = ">=3.10"
-dependencies = []
-
-
-Learn More
-Econometrics: Classic OLS + modern scikit-learn regression examples
-Macroeconomics: Solow-style convergence visualization
-Policy analytics: Wage-and-hour audit modeling for compliance insights
-Visualization: Outputs compatible with Tableau and Power BI
 Contributing
-
-Pull requests, issues, and suggestions are welcome!
-Please ensure code is formatted with Black and passes flake8 linting before submitting.
+PRs and issues welcome. Please format with Black and pass flake8 before submitting.
 
 License
-This project is distributed under the MIT License — see LICENSE for details.
+MIT License — see LICENSE for details.
+
