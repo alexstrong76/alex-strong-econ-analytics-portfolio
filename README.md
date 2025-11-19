@@ -161,6 +161,7 @@ arch
 numpy>=1.24,<3.0
 pandas>=2.0,<3.0
 
+
 # B) If you want the "Python package" workflow, use this FIXED variant.
 # It won’t fail if deps/tests are missing.
 # File: .github/workflows/python-package.yml
