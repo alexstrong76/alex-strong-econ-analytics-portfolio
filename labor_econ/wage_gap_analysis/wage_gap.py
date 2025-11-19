@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 def main():
-    # Reproducible random generator
+    # Reproducible RNG
     rng = np.random.default_rng(123)
 
     n = 2000
@@ -46,13 +46,20 @@ def main():
         }
     )
 
-    # Design matrix with dummies
-    X = pd.get_dummies(df[["years_exp", "edu", "gender", "industry"]], drop_first=True)
-    X = sm.add_constant(X)
+    # Design matrix with dummies (all numeric)
+    X_df = pd.get_dummies(
+        df[["years_exp", "edu", "gender", "industry"]],
+        drop_first=True
+    )
+    X_df = sm.add_constant(X_df)
 
-    # 🔧 Make sure everything is numeric 
-    X = X.astype(float)
-    y = df["wage"].astype(float)
+    # Debug: show dtypes
+    print("Design matrix dtypes:\n", X_df.dtypes)
+    print("Target dtype:", df["wage"].dtype, "\n")
+
+    # ✅ Force everything to plain float numpy arrays
+    X = X_df.to_numpy(dtype=float)
+    y = df["wage"].to_numpy(dtype=float)
 
     # OLS regression
     model = sm.OLS(y, X).fit()
