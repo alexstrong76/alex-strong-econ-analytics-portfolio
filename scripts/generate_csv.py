@@ -32,3 +32,9 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+# =========================================
+# (Optional) File: requirements.txt
+# =========================================
+# Not required for the stdlib example above. Add if your scripts need packages.
+# numpy>=1.24,<3.0
+# pandas>=2.0,<3.0
