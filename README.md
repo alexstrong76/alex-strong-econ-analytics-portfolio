@@ -153,13 +153,14 @@ Example storyboard ideas:
 ## License 
 ## Python requirements (`requirements.txt`)
 ```txt
-matplotlib
-scikit-learn
-statsmodels
-linearmodels
-arch
-numpy>=1.24,<3.0
-pandas>=2.0,<3.0
+# matplotlib
+# scikit-learn
+# linearmodels
+# arch
+# numpy>=1.24,<3.0
+# pandas>=2.0,<3.0
+# scipy>=1.10,<2.0
+# statsmodels>=0.14,<0.15
 
 # ================================
 # File: main.py  (repo root)
