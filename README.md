@@ -160,6 +160,9 @@ scikit-learn
 statsmodels
 linearmodels
 arch
+numpy>=1.24,<3.0
+pandas>=2.0,<3.0
+
 
 Learn More
 Econometrics: Classic OLS + modern scikit-learn regression examples
