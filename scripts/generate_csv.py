@@ -1,40 +1,28 @@
 # =========================================
-# File: scripts/generate_csv.py
+# File: scripts/generate_csv.py       (example 1)
 # =========================================
 """
-Generates a simple CSV into outputs/data.csv using only the Python stdlib.
-WHY: Avoids dependency issues; runs anywhere without extra installs.
+Writes demo CSV to OUTPUT_DIR (default: data/processed).
+WHY: Standardizes outputs for CI collection.
 """
 from __future__ import annotations
-import csv
+import csv, os
 from pathlib import Path
 
-
 def main() -> int:
-    out_dir = Path("outputs")
+    out_dir = Path(os.getenv("OUTPUT_DIR", "data/processed"))
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_csv = out_dir / "data.csv"
-
+    path = out_dir / "demo_metrics.csv"
     rows = [
         {"id": 1, "name": "alpha", "value": 3.14},
-        {"id": 2, "name": "beta", "value": 2.71},
+        {"id": 2, "name": "beta",  "value": 2.71},
         {"id": 3, "name": "gamma", "value": 1.62},
     ]
-
-    with out_csv.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=["id", "name", "value"])
-        writer.writeheader()
-        writer.writerows(rows)
-
-    print(f"Wrote {len(rows)} rows -> {out_csv.resolve()}")
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=rows[0].keys())
+        w.writeheader(); w.writerows(rows)
+    print(f"Wrote {path} ({len(rows)} rows)")
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())
-# =========================================
-# (Optional) File: requirements.txt
-# =========================================
-# Not required for the stdlib example above. Add if your scripts need packages.
-# numpy>=1.24,<3.0
-# pandas>=2.0,<3.0
