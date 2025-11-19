@@ -94,6 +94,7 @@ time_series/
   └── garch_volatility/
 labor_econ/
   └── wage_gap_analysis/
+    wage_gap.py
 labor_law_compliance/
   └── wage_hour_audit/
 bls_programs/
