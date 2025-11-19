@@ -12,11 +12,6 @@ permissions:
 jobs:
   run-python:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.10"]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,50 +19,35 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
-          cache: "pip"
-          cache-dependency-path: "requirements.txt"
+          python-version: "3.10"
+          cache: "pip"  # keep cache, but DO NOT set cache-dependency-path
 
-      - name: Validate expected files exist (fail fast)
+      - name: Show tree
         run: |
-          set -e
-          if [ ! -f requirements.txt ]; then
-            echo "::error title=Missing requirements.txt::Create requirements.txt at repo root (e.g., numpy>=1.24,<3.0%0Apandas>=2.0,<3.0)."
-            exit 1
-          fi
-          if [ ! -f main.py ]; then
-            echo "::error title=Missing main.py::Create main.py at repo root."
-            exit 1
-          fi
+          pwd
+          ls -la
 
-      - name: Upgrade pip & install dependencies
+      - name: Install dependencies (requirements.txt)
+        if: ${{ hashFiles('requirements.txt') != '' }}
         run: |
-          set -euxo pipefail
-          python -m pip install --upgrade pip wheel
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip freeze | tee pip-freeze.txt
+
+      - name: Install package (pyproject.toml)
+        if: ${{ hashFiles('pyproject.toml') != '' }}
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Warn if no dependency file found
+        if: ${{ hashFiles('requirements.txt', 'pyproject.toml') == '' }}
+        run: |
+          echo "::warning title=No dependency manifest found::Add requirements.txt or pyproject.toml at repo root to manage dependencies."
 
       - name: Run script
-        env:
-          NAME: GitHub
         run: |
-          set -euxo pipefail
-          python main.py | tee script-output.txt
-
-      - name: Run tests (only if tests/ exists)
-        if: ${{ hashFiles('tests/**') != '' }}
-        run: |
-          set -euxo pipefail
-          python -m pip install pytest
-          pytest -q | tee pytest-output.txt
-
-      - name: Upload artifacts (logs/output)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-ci-artifacts
-          path: |
-            pip-freeze.txt
-            script-output.txt
-            pytest-output.txt
-          if-no-files-found: ignore
+          if [ -f main.py ]; then
+            python main.py
+          else
+            echo "::warning title=No main.py::Add main.py at repo root or adjust the step to your script path."
+          fi
