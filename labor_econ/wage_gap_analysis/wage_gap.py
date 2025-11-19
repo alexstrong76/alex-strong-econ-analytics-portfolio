@@ -50,7 +50,7 @@ def main():
     X = pd.get_dummies(df[["years_exp", "edu", "gender", "industry"]], drop_first=True)
     X = sm.add_constant(X)
 
-    # 🔧 Make sure everything is numeric (this fixes your error)
+    # 🔧 Make sure everything is numeric 
     X = X.astype(float)
     y = df["wage"].astype(float)
 
