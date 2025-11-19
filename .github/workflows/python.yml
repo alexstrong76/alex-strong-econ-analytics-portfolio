@@ -16,40 +16,27 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.10"]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Show basic environment info
-        run: |
-          echo "Actor: ${{ github.actor }}"
-          echo "Ref: ${{ github.ref }}"
-          echo "SHA: ${{ github.sha }}"
-          uname -a
-          lsb_release -a || true
-          echo "Repository tree:"
-          ls -la
-          echo "---"
-          if [ -d tests ]; then echo "tests/ detected"; else echo "tests/ not present"; fi
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: pip
-          cache-dependency-path: requirements.txt
+          cache: "pip"
+          cache-dependency-path: "requirements.txt"
 
-      - name: Validate expected files exist (fail fast with clear message)
+      - name: Validate expected files exist (fail fast)
         run: |
           set -e
           if [ ! -f requirements.txt ]; then
-            echo "::error title=Missing requirements.txt::Create requirements.txt at repo root. Example:
-numpy>=1.24,<3.0
-pandas>=2.0,<3.0" 
+            echo "::error title=Missing requirements.txt::Create requirements.txt at repo root (e.g., numpy>=1.24,<3.0%0Apandas>=2.0,<3.0)."
             exit 1
           fi
           if [ ! -f main.py ]; then
-            echo "::error title=Missing main.py::Create main.py at repo root. Example prints a small DataFrame."
+            echo "::error title=Missing main.py::Create main.py at repo root."
             exit 1
           fi
 
@@ -58,10 +45,7 @@ pandas>=2.0,<3.0"
           set -euxo pipefail
           python -m pip install --upgrade pip wheel
           pip install -r requirements.txt
-          python -V
-          pip --version
-          echo "--- pip freeze ---" | tee pip-freeze.txt
-          pip freeze | tee -a pip-freeze.txt
+          pip freeze | tee pip-freeze.txt
 
       - name: Run script
         env:
@@ -71,7 +55,7 @@ pandas>=2.0,<3.0"
           python main.py | tee script-output.txt
 
       - name: Run tests (only if tests/ exists)
-        if: ${{ hashFiles('tests/*') != '' }}
+        if: ${{ hashFiles('tests/**') != '' }}
         run: |
           set -euxo pipefail
           python -m pip install pytest
