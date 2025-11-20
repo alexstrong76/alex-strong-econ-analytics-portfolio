@@ -1,33 +1,60 @@
+#!/usr/bin/env python
+"""
+solow.py
+
+Simulate a basic Solow growth model with:
+- Capital per worker
+- Output per worker
+- Consumption per worker
+
+Output:
+    data/processed/solow_simulation.csv
+"""
+
 import numpy as np
-import matplotlib.pyplot as plt
+import pandas as pd
+from pathlib import Path
 
-# Parameters
-alpha = 0.33   # capital share
-s = 0.20       # savings rate
-delta = 0.05   # depreciation
-n = 0.01       # population growth
-g = 0.02       # technology growth
-T = 100        # periods
-k0 = 1.0       # initial capital per effective worker
 
-def next_k(k):
-    return (s * k**alpha + (1 - delta) * k) / ((1 + n) * (1 + g))
+def main():
+    print("Running solow.py ...")
 
-k = np.zeros(T)
-k[0] = k0
-for t in range(1, T):
-    k[t] = next_k(k[t-1])
+    T = 100
+    alpha = 0.33
+    s = 0.2
+    delta = 0.05
+    n = 0.01
+    g = 0.02
 
-y = k**alpha
-c = (1 - s) * y
+    k = np.zeros(T)
+    y = np.zeros(T)
+    c = np.zeros(T)
 
-print(f"Approx steady-state k*: {k[-1]:.4f}")
+    k[0] = 5.0
 
-plt.figure()
-plt.plot(k, label='Capital per eff. worker (k_t)')
-plt.plot(y, label='Output per eff. worker (y_t)')
-plt.title('Solow Model Convergence')
-plt.xlabel('Time')
-plt.legend()
-plt.tight_layout()
-plt.show()
+    for t in range(T):
+        y[t] = k[t] ** alpha
+        c[t] = (1 - s) * y[t]
+        if t < T - 1:
+            k[t + 1] = (1 - delta) * k[t] + s * y[t]
+
+    df = pd.DataFrame(
+        {
+            "period": np.arange(T),
+            "k": k,
+            "y": y,
+            "c": c,
+        }
+    )
+
+    out_dir = Path("data/processed")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / "solow_simulation.csv"
+    df.to_csv(out_path, index=False)
+
+    print(f"Saved Solow simulation to: {out_path.resolve()}")
+    print(df.head())
+
+
+if __name__ == "__main__":
+    main()

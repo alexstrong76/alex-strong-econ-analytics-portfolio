@@ -1,27 +1,76 @@
+#!/usr/bin/env python
+"""
+wage_hour_audit.py
+
+Generate synthetic timesheet data including:
+- Hours worked
+- Overtime hours
+- Department
+- Rounding increment
+- Gross pay
+
+Output:
+    data/processed/timesheets_synthetic.csv
+"""
+
 import numpy as np
 import pandas as pd
+from pathlib import Path
 
-np.random.seed(42)
-n = 500
-df = pd.DataFrame({
-    'emp_id': np.random.randint(1000, 1100, n),
-    'week': np.random.randint(1, 10, n),
-    'hourly_rate': np.random.choice([15,18,22,28], n, p=[0.3,0.3,0.25,0.15]),
-    'hours': np.clip(np.random.normal(42, 6, n), 20, 70),
-    'rounded_to': np.random.choice([1, 6, 15], n, p=[0.2, 0.5, 0.3])
-})
 
-# Overtime (simple example, 1.5x over 40)
-df['ot_hours'] = (df['hours'] - 40).clip(lower=0)
-df['reg_hours'] = df['hours'] - df['ot_hours']
-df['reg_pay'] = df['reg_hours'] * df['hourly_rate']
-df['ot_pay'] = df['ot_hours'] * df['hourly_rate'] * 1.5
-df['gross'] = df['reg_pay'] + df['ot_pay']
+def main():
+    print("Running wage_hour_audit.py ...")
 
-# Simple flags an analyst might explore
-df['potential_rounding_issue'] = df['rounded_to'].ge(15)
-df['long_week_flag'] = df['hours'].ge(55)
+    rng = np.random.default_rng(2025)
 
-print(df.head())
-print("\nAggregate preview:")
-print(df[['gross','ot_hours','potential_rounding_issue','long_week_flag']].describe(include='all'))
+    n_employees = 150
+    n_weeks = 26
+    depts = ["Operations", "Sales", "HR", "Finance", "Warehouse"]
+    rounding_choices = [1, 6, 15]
+
+    rows = []
+    emp_ids = [f"E{str(i).zfill(3)}" for i in range(1, n_employees + 1)]
+
+    for emp in emp_ids:
+        dept = rng.choice(depts)
+        base_rate = rng.uniform(15, 45)
+
+        for week in range(1, n_weeks + 1):
+            base_hours = rng.normal(loc=40, scale=5)
+            base_hours = max(20, min(70, base_hours))
+
+            rounding_to = rng.choice(rounding_choices, p=[0.5, 0.3, 0.2])
+            hours_rounded = np.round(base_hours / rounding_to) * rounding_to
+
+            ot_hours = max(0, hours_rounded - 40)
+            long_week_flag = int(hours_rounded > 50)
+
+            gross_pay = hours_rounded * base_rate
+
+            rows.append(
+                {
+                    "employee_id": emp,
+                    "week": week,
+                    "dept": dept,
+                    "hourly_rate": round(base_rate, 2),
+                    "hours": round(hours_rounded, 2),
+                    "ot_hours": round(ot_hours, 2),
+                    "rounded_to": rounding_to,
+                    "long_week_flag": long_week_flag,
+                    "gross": round(gross_pay, 2),
+                }
+            )
+
+    df = pd.DataFrame(rows)
+
+    out_dir = Path("data/processed")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / "timesheets_synthetic.csv"
+    df.to_csv(out_path, index=False)
+
+    print(f"Saved timesheet data to: {out_path.resolve()}")
+    print(df.head())
+
+
+if __name__ == "__main__":
+    main()

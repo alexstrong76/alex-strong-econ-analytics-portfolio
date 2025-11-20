@@ -1,16 +1,60 @@
+#!/usr/bin/env python
+"""
+ces_utility.py
+
+Simulate CES utility over two goods for a set of consumers.
+Not strictly used in the storyboards, but good micro / applied math content.
+
+Output:
+    data/processed/ces_utility_sim.csv
+"""
+
 import numpy as np
+import pandas as pd
+from pathlib import Path
 
-rho = -0.5                # (sigma-1)/sigma
-p = np.array([2.0, 3.0])  # prices
-I = 100.0                 # income
 
-def ces_demand(p, I, rho, w=np.array([0.5, 0.5])):
-    # symmetric two-good case
-    P = (w[0]*p[0]**(1-rho) + w[1]*p[1]**(1-rho))**(1/(1-rho))
-    C = I / P
-    x = C * w * (p / P)**(-1/(1-rho))
-    return x, P
+def ces_utility(x, y, sigma=0.5):
+    # CES with elasticity sigma and rho = (sigma-1)/sigma
+    rho = (sigma - 1.0) / sigma
+    return (0.5 * (x ** rho) + 0.5 * (y ** rho)) ** (1.0 / rho)
 
-x, P = ces_demand(p, I, rho)
-print(f"CES price index P: {P:.4f}")
-print("Optimal consumption bundle:", x)
+
+def main():
+    print("Running ces_utility.py ...")
+
+    rng = np.random.default_rng(2025)
+    n = 1000
+
+    income = rng.lognormal(mean=3.5, sigma=0.5, size=n)
+    px = rng.uniform(1, 5, size=n)
+    py = rng.uniform(1, 5, size=n)
+
+    alpha = 0.5
+    x = alpha * income / px
+    y = (1 - alpha) * income / py
+
+    u = ces_utility(x, y, sigma=0.8)
+
+    df = pd.DataFrame(
+        {
+            "income": income,
+            "px": px,
+            "py": py,
+            "x": x,
+            "y": y,
+            "utility": u,
+        }
+    )
+
+    out_dir = Path("data/processed")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / "ces_utility_sim.csv"
+    df.to_csv(out_path, index=False)
+
+    print(f"Saved CES utility simulation to: {out_path.resolve()}")
+    print(df.head())
+
+
+if __name__ == "__main__":
+    main()

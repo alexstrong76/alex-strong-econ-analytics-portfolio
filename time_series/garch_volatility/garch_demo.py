@@ -1,13 +1,55 @@
-import numpy as np, pandas as pd
-from arch import arch_model
+#!/usr/bin/env python
+"""
+garch_demo.py
 
-np.random.seed(8)
-T = 1000
-eps = np.random.randn(T)
-# Volatility clustering via GARCH structure
-am = arch_model(None, vol="Garch", p=1, o=0, q=1, dist="normal")
-# Simulate
-sim = am.simulate([0.0, 0.05, 0.1, 0.85], T)  # [mu, omega, alpha, beta]
-r = sim["data"]
-m = arch_model(r, mean="Constant", vol="Garch", p=1, q=1).fit(disp="off")
-print(m.summary())
+Simulate a simple GARCH(1,1)-style process for returns and volatility.
+
+Output:
+    data/processed/garch_like_returns.csv
+"""
+
+import numpy as np
+import pandas as pd
+from pathlib import Path
+
+
+def main():
+    print("Running garch_demo.py ...")
+
+    rng = np.random.default_rng(2025)
+
+    T = 1000
+    omega = 0.0005
+    alpha = 0.05
+    beta = 0.9
+
+    returns = np.zeros(T)
+    var = np.zeros(T)
+    var[0] = 0.0004
+
+    for t in range(1, T):
+        eps = rng.normal()
+        returns[t] = np.sqrt(var[t - 1]) * eps
+        var[t] = omega + alpha * returns[t] ** 2 + beta * var[t - 1]
+
+    approx_vol = np.sqrt(var)
+
+    df = pd.DataFrame(
+        {
+            "t": np.arange(T),
+            "returns": returns,
+            "approx_vol": approx_vol,
+        }
+    )
+
+    out_dir = Path("data/processed")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / "garch_like_returns.csv"
+    df.to_csv(out_path, index=False)
+
+    print(f"Saved GARCH-like returns to: {out_path.resolve()}")
+    print(df.head())
+
+
+if __name__ == "__main__":
+    main()
