@@ -208,3 +208,23 @@ IRF visualization
 Cointegration testing (Storyboard 3)
 All datasets are reproducible — simply run the corresponding script from the project root:
 python path/to/script.py
+
+## Tableau Storyboards
+
+This repository includes three Tableau story-driven dashboards built on the synthetic datasets in `data/processed/`.
+
+1. **Labor Market & Wage Analytics (Storyboard 1)**  
+   - Workbook: `tableau/Storyboard1_Labor_Market_Wage_Analytics.twbx`  
+   - Data: `data/processed/wages_synthetic.csv`  
+
+2. **Compliance & Timesheet Risk Analytics (Storyboard 2)**  
+   - Workbook: `tableau/Storybboard2_Compliance_Timesheet_Risk.twbx`  
+   - Data: `data/processed/timesheets_synthetic.csv`  
+
+3. **Macro & Time-Series Economic Trends (Storyboard 3)**  
+   - Workbook: `tableau/Storyboard3_Macro_Time_Series_Trends.twbx`  
+   - Data:  
+     - `data/processed/gdp_growth_synthetic.csv`  
+     - `data/processed/garch_like_returns.csv`  
+     - `data/processed/var_cointegration.csv`  
+  
