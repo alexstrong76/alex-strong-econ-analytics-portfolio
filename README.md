@@ -113,6 +113,11 @@ labor_law_compliance/
   └── wage_hour_audit/
 bls_programs/
   └── qcew_ces_mock/
+causal_inference/
+bayesian_inference/
+ml_models/
+  ├── sklearn_models/
+  ├── deep_learning/
 data/
   └── processed/          
 notebooks/
@@ -295,5 +300,9 @@ All of these scripts are designed to be:
 - **Self-contained:** They can be run from the repository root using `python path/to/script.py`.
 - **Portfolio-ready:** Each example aligns with real-world use cases in economic research, policy analysis, compliance analytics, and risk modeling.
 
-
-  
+## Tech Stack
+Languages: Python, R, SQL
+Libraries: pandas, NumPy, scikit-learn, statsmodels, PyTorch
+Visualization: Tableau, Power BI, Matplotlib
+Modeling: OLS, Ridge, ARIMA, VAR, GARCH, Bayesian Inference, Causal DiD
+Tools: Git, Jupyter Notebooks, GitHub Actions
