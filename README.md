@@ -114,18 +114,20 @@ labor_law_compliance/
 bls_programs/
   └── qcew_ces_mock/
 causal_inference/
-bayesian_inference/
-ml_models/
-  ├── sklearn_models/
-  ├── deep_learning/
+bayesian/
+└── bayesian_inference/
+ml/
+  └── sklearn_models/
+deep_learning/
+regression/
 data/
   └── processed/          
 notebooks/
 scripts/
 tableau/
   └── screenshots/   
-tools/
 tests/
+tools/
 .github/
   └── workflows/
 
