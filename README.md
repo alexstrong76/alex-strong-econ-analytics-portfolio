@@ -36,6 +36,20 @@ Each project demonstrates an applied approach to modeling, analysis, and storyte
 > Data for dashboards in data/processed/
 > Dashboards built externally in Tableau using these CSVs
 
+## Bayesian Inference, Machine Learning, and Deep Learning Projects
+
+This repository now includes advanced projects bridging econometric modeling, causal inference, and applied data science.
+
+| Area | Folder | Description |
+|------|---------|-------------|
+| Bayesian Inference | `bayesian/bayes_posterior_policy_effect.py` | Bayesian posterior estimation of a policy effect using a conjugate normal-normal model. |
+| Regression | `regression/regularized_employment_regression.py` | Ridge and OLS regression for employment data, exploring feature regularization. |
+| Causal Inference | `causal_inference/diff_in_diff_policy_evaluation.py` | Simulated DiD policy analysis with pre/post treatment evaluation. |
+| Deep Learning | `deep_learning/pytorch_income_classifier.py` | PyTorch MLP classifier predicting high-income earners from synthetic demographic data. |
+| Machine Learning | `ml/sklearn_credit_risk_model.py` | Credit risk classification using logistic regression and random forest models. |
+
+Each script generates reproducible datasets in `data/processed/` for further visualization and model benchmarking.
+
 ---
 
 ## Quickstart
@@ -232,5 +246,54 @@ This repository includes three Tableau story-driven dashboards built on the synt
    - Data:  
      - `data/processed/gdp_growth_synthetic.csv`  
      - `data/processed/garch_like_returns.csv`  
-     - `data/processed/var_cointegration.csv`  
+     - `data/processed/var_cointegration.csv`
+
+## Advanced Inference & Machine Learning Projects
+
+This portfolio also includes a set of advanced, production-style examples that bridge traditional econometrics with modern machine learning and Bayesian methods.
+
+### Bayesian Inference
+
+- **Script:** `bayesian/bayes_posterior_policy_effect.py`  
+- **Dataset:** `data/processed/bayes_policy_effect.csv`  
+- **Description:**  
+  Simulates a simple policy evaluation setting (treated vs. control group) and applies a conjugate normal–normal Bayesian update to estimate the posterior distribution of the treatment effect. Demonstrates the relationship between classical diff-in-means estimators and Bayesian posterior inference.
+
+### Regularized Regression Modeling
+
+- **Script:** `regression/regularized_employment_regression.py`  
+- **Dataset:** `data/processed/regularized_employment_regression.csv`  
+- **Description:**  
+  Generates a synthetic employment-related wage dataset and fits both OLS and Ridge regression models using scikit-learn. Designed to illustrate regularization, multicollinearity, and model comparison in an applied labor economics context.
+
+### Causal Inference (Difference-in-Differences)
+
+- **Script:** `causal_inference/diff_in_diff_policy_evaluation.py`  
+- **Dataset:** `data/processed/did_policy_sim.csv`  
+- **Description:**  
+  Implements a two-way panel difference-in-differences setup with treated and control units before and after a policy change. Estimates a DiD model using statsmodels, providing a clean example of policy evaluation with simulated data.
+
+### Deep Learning with PyTorch
+
+- **Script:** `deep_learning/pytorch_income_classifier.py`  
+- **Dataset:** `data/processed/income_classifier_data.csv`  
+- **Description:**  
+  Builds a simple feed-forward neural network in PyTorch to classify individuals into high vs. non-high income categories based on age, education, and experience. Includes a minimal training loop and evaluation output, demonstrating MLPs and modern DL tooling on tabular data.
+
+### Machine Learning with scikit-learn
+
+- **Script:** `ml/sklearn_credit_risk_model.py`  
+- **Dataset:** `data/processed/credit_risk_synthetic.csv`  
+- **Description:**  
+  Simulates a credit risk classification problem and fits both Logistic Regression and Random Forest models using scikit-learn. Evaluates model performance using ROC AUC and classification metrics, illustrating how ML methods complement econometric approaches in risk modeling and decision support.
+
+---
+
+All of these scripts are designed to be:
+
+- **Reproducible:** They generate their own synthetic datasets in `data/processed/`.
+- **Self-contained:** They can be run from the repository root using `python path/to/script.py`.
+- **Portfolio-ready:** Each example aligns with real-world use cases in economic research, policy analysis, compliance analytics, and risk modeling.
+
+
   
