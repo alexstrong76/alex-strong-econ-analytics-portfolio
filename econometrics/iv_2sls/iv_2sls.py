@@ -23,3 +23,10 @@ print(iv.summary)
 # First-stage relevancy (F-stat roughly)
 fs = sm.OLS(df["x"], sm.add_constant(df["z"])).fit()
 print("\nFirst-stage F-stat (x ~ z):", fs.fvalue)
+
+import os
+os.makedirs("econometrics/figures", exist_ok=True)
+
+plt.savefig("econometrics/figures/iv_2sls_results.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: econometrics/figures/iv_2sls_results.png")
