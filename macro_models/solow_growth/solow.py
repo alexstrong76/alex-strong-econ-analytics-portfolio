@@ -26,6 +26,13 @@ def main():
     n = 0.01
     g = 0.02
 
+import os
+os.makedirs("macro_models/figures", exist_ok=True)
+
+plt.savefig("macro_models/figures/solow_convergence.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: macro_models/figures/solow_convergence.png")
+
     k = np.zeros(T)
     y = np.zeros(T)
     c = np.zeros(T)
