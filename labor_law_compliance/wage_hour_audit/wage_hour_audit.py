@@ -74,3 +74,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import os
+os.makedirs("labor_law_compliance/wage_hour_audit/figures", exist_ok=True)
+
+plt.savefig("labor_law_compliance/wage_hour_audit/figures/overtime_by_dept.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: labor_law_compliance/wage_hour_audit/figures/overtime_by_dept.png")
