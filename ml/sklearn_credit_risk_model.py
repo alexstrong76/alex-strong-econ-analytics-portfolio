@@ -82,3 +82,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import os
+os.makedirs("ml/figures", exist_ok=True)
+
+plt.savefig("ml/figures/roc_curves.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: ml/figures/roc_curves.png")
