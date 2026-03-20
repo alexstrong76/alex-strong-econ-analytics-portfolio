@@ -88,3 +88,13 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import os
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+os.makedirs("deep_learning/figures", exist_ok=True)
+
+plt.savefig("deep_learning/figures/training_loss.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: deep_learning/figures/training_loss.png")
