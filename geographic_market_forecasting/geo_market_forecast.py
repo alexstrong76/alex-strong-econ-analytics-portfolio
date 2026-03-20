@@ -192,3 +192,9 @@ holdout_df[["metro","year","emp","predicted"]].to_csv(
 )
 print("Saved: data/processed/holdout_forecast_results.csv")
 print("\nAll done.")
+
+cd /workspaces/alex-strong-econ-analytics-portfolio/geographic_market_forecasting
+python3 geo_market_forecast.py
+git add figures/
+git commit -m "feat: add rendered output figures for geographic forecasting project"
+git push origin main
