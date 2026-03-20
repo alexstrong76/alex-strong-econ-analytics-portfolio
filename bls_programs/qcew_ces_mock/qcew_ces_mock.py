@@ -59,3 +59,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import os
+os.makedirs("bls_programs/qcew_ces_mock/figures", exist_ok=True)
+
+plt.savefig("bls_programs/qcew_ces_mock/figures/employment_by_sector.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: bls_programs/qcew_ces_mock/figures/employment_by_sector.png")
