@@ -85,3 +85,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import os
+os.makedirs("labor_econ/wage_gap_analysis/figures", exist_ok=True)
+
+plt.savefig("labor_econ/wage_gap_analysis/figures/wage_distribution.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: labor_econ/wage_gap_analysis/figures/wage_distribution.png")
