@@ -2,93 +2,331 @@
 <!-- HEADER + BADGES -->
 <!-- ============================= -->
 
-# Economics & Analytics Portfolio — Alex Strong  
+# Economics & Analytics Portfolio — Alex Strong
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
-![Build](https://img.shields.io/badge/Build-Passing-success.svg)
-![Tests](https://img.shields.io/badge/Tests-passing-brightgreen.svg)
-![Notebooks](https://img.shields.io/badge/Notebooks-available-blueviolet.svg)
-![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)
-![Made with Jupyter](https://img.shields.io/badge/Made%20with-Jupyter-orange.svg)
-![Data Science](https://img.shields.io/badge/Focus-Econometrics%20%7C%20Labor%20Analytics-lightgrey.svg)
-![Open Source](https://img.shields.io/badge/Open%20Source-Contributions%20Welcome-brightgreen.svg)
-![Status](https://img.shields.io/badge/Status-Active-success.svg)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Made with Jupyter](https://img.shields.io/badge/Made%20with-Jupyter-orange.svg)](https://jupyter.org)
+[![Build](https://img.shields.io/badge/Build-Passing-success.svg)]()
+[![Tests](https://img.shields.io/badge/Tests-passing-brightgreen.svg)]()
 
-> Pytest unit tests for key econometrics modules, and example Jupyter notebooks for IV/2SLS and Difference-in-Differences.
+Applied economist and quantitative analyst with 7 years of professional
+experience across federal labor economics, litigation analytics, and
+private-sector data science. This portfolio contains reproducible Python
+projects spanning causal inference, predictive modeling, time-series
+forecasting, machine learning, and compliance analytics — each grounded
+in real-world decision problems.
+
+**M.A. Economics, American University · Former U.S. Bureau of Labor
+Statistics Economist**
+
+> All datasets are synthetic and generated programmatically for
+> demonstration purposes. Code is tested and runs in GitHub Codespaces.
 
 ---
 
-## Overview  
+## Projects at a Glance
 
-This portfolio showcases **academic and professional analytics projects** bridging *economics, data science,* and *labor policy*.  
-Each project demonstrates an applied approach to modeling, analysis, and storytelling through data — ranging from macroeconomic simulations to compliance analytics.
-
-**Key themes:**
-- **Economic modeling:** Solow growth, CES demand, econometric regression, ARIMA forecasting  
-- **Labor & policy analytics:** Wage-gap regression, synthetic Department of Labor “Wage & Hour” audit data  
-- **Applied research methods:** OLS estimation, causal analysis foundations, time-series decomposition  
-- **Data tools:** Python, pandas, NumPy, scikit-learn, statsmodels, Jupyter, Tableau-ready data outputs  
-
-> All data are **synthetic** and created for educational or demonstration purposes only.
->
-> Code tested and run using GitHub Codespaces
-> Data for dashboards in data/processed/
-> Dashboards built externally in Tableau using these CSVs
-
-## Bayesian Inference, Machine Learning, and Deep Learning Projects
-
-This repository now includes advanced projects bridging econometric modeling, causal inference, and applied data science.
-
-| Area | Folder | Description |
-|------|---------|-------------|
-| Bayesian Inference | `bayesian/bayes_posterior_policy_effect.py` | Bayesian posterior estimation of a policy effect using a conjugate normal-normal model. |
-| Regression | `regression/regularized_employment_regression.py` | Ridge and OLS regression for employment data, exploring feature regularization. |
-| Causal Inference | `causal_inference/diff_in_diff_policy_evaluation.py` | Simulated DiD policy analysis with pre/post treatment evaluation. |
-| Deep Learning | `deep_learning/pytorch_income_classifier.py` | PyTorch MLP classifier predicting high-income earners from synthetic demographic data. |
-| Machine Learning | `ml/sklearn_credit_risk_model.py` | Credit risk classification using logistic regression and random forest models. |
-
-Each script generates reproducible datasets in `data/processed/` for further visualization and model benchmarking.
+| Project | Method | Key Output |
+|---|---|---|
+| [Geographic Market Forecasting](#geographic-market-forecasting) | Ridge regression, holdout validation | 7.21% overall MAPE on unseen metros |
+| [Causal Inference — DiD](#causal-inference--difference-in-differences) | Difference-in-differences | ATT estimate with parallel trends validation |
+| [Bayesian Policy Evaluation](#bayesian-policy-evaluation) | Conjugate normal-normal Bayesian update | Posterior distribution of treatment effect |
+| [Time-Series Modeling](#time-series-modeling) | ARIMA, VAR/IRF, GARCH | GDP forecasts, IRFs, volatility paths |
+| [Wage Gap Analysis](#wage-gap-analysis) | OLS, Oaxaca-Blinder decomposition | Explained vs. unexplained wage gap |
+| [Compliance & Timesheet Risk](#compliance--timesheet-risk-analytics) | Rule-based flagging, statistical analysis | Overtime exposure and back-wage liability |
+| [Econometrics Suite](#econometrics-suite) | IV/2SLS, RD design, panel FE, PSM | Full applied econometrics toolkit |
+| [Regularized Regression](#regularized-regression) | Ridge vs. OLS, cross-validation | Out-of-sample RMSE comparison |
+| [Deep Learning — Income Classifier](#deep-learning--income-classifier) | PyTorch MLP | ROC-AUC vs. logistic baseline |
+| [Credit Risk Classification](#credit-risk-classification) | Logistic regression, random forest | ROC-AUC, feature importance |
+| [Solow Growth Model](#solow-growth-model) | Neoclassical growth simulation | Steady-state convergence paths |
+| [CES Demand Estimation](#ces-demand-estimation) | CES utility maximization, NLS | Elasticity of substitution recovery |
+| [BLS QCEW/CES Mock Program](#bls-qcewces-mock-program) | Synthetic data generation | BLS-structured employment and wage CSVs |
 
 ---
 
 ## Quickstart
-
 ```bash
-# 1) Clone
-git clone https://github.com/<your-username>/alex-strong-econ-analytics-portfolio.git
+# 1. Clone the repository
+git clone https://github.com/alexstrong76/alex-strong-econ-analytics-portfolio.git
 cd alex-strong-econ-analytics-portfolio
 
-# 2) Create & activate a virtual environment
+# 2. Create and activate a virtual environment
 python -m venv .venv
-# macOS/Linux:
-source .venv/bin/activate
-# Windows (PowerShell):
-# .venv\Scripts\Activate.ps1
+source .venv/bin/activate        # macOS/Linux
+# .venv\Scripts\Activate.ps1    # Windows PowerShell
 
-# 3) Install dependencies
+# 3. Install dependencies
 pip install -r requirements.txt
 
-# 4) Run example scripts
-python macro_models/solow_growth/solow.py
-python micro_models/ces_demand/ces_utility.py
+# 4. Run any project script from the repo root
+python causal_inference/diff_in_diff_policy_evaluation.py
+python geographic_market_forecasting/geo_market_forecast.py
+python time_series/arima_gdp/arima_simulated.py
+```
 
-# Econometrics (examples)
-python econometrics/iv_2sls/iv_2sls.py
-python econometrics/diff_in_diff/did_basic.py
-python econometrics/heteroskedasticity_robust_inference/robust_se_diagnostics.py
+---
 
-# Time series (examples)
+## Project Details
+
+### Geographic Market Forecasting
+
+**Folder:** `geographic_market_forecasting/`
+
+Using employment history from established U.S. metro areas to forecast
+labor market dynamics in unseen geographies before market entry —
+simulating the core analytical problem in expansion planning.
+
+- **Data:** BLS State and Metro Area Employment (CES), 2015–2023,
+  via public API
+- **Model:** Ridge regression on lagged employment, growth rate,
+  and trend; holdout metros withheld entirely during training
+- **Result:** Overall holdout MAPE of **7.21%** (Phoenix AZ: 5.59%,
+  New York NY: 8.84%) using lagged features only, with no
+  market-specific knowledge at prediction time
+```bash
+python geographic_market_forecasting/fetch_bls_data.py
+python geographic_market_forecasting/geo_market_forecast.py
+```
+
+---
+
+### Causal Inference — Difference-in-Differences
+
+**Folder:** `causal_inference/`
+
+Estimates the causal effect of a policy intervention using a two-way
+panel DiD design with treated and control units observed before and
+after a policy change.
+
+- **Method:** OLS with treatment, time, and interaction terms via
+  `statsmodels`; pre-trend visualization for assumption validation
+- **Output:** ATT estimate with standard errors and parallel trends
+  diagnostic plot
+```bash
+python causal_inference/diff_in_diff_policy_evaluation.py
+```
+
+---
+
+### Bayesian Policy Evaluation
+
+**Folder:** `bayesian/`
+
+Applies a conjugate normal-normal Bayesian update to estimate the full
+posterior distribution of a treatment effect, demonstrating the
+relationship between Bayesian credible intervals and classical
+confidence intervals.
+
+- **Output:** Posterior mean, 95% credible interval, and probability
+  that the treatment effect exceeds zero
+```bash
+python bayesian/bayes_posterior_policy_effect.py
+```
+
+---
+
+### Time-Series Modeling
+
+**Folder:** `time_series/`
+
+Three complementary time-series methods applied to simulated
+macroeconomic and financial data.
+
+| Subfolder | Method | Output |
+|---|---|---|
+| `arima_gdp/` | ARIMA forecasting | GDP growth forecast with confidence intervals |
+| `var_irf_cointegration/` | VAR, IRF, Engle-Granger cointegration | Impulse response functions, cointegration test |
+| `garch_volatility/` | GARCH(1,1) | Conditional variance and volatility clustering |
+```bash
 python time_series/arima_gdp/arima_simulated.py
 python time_series/var_irf_cointegration/var_irf_coint.py
 python time_series/garch_volatility/garch_demo.py
+```
 
-# Labor & compliance (examples)
+---
+
+### Wage Gap Analysis
+
+**Folder:** `labor_econ/wage_gap_analysis/`
+
+Estimates the wage gap between demographic groups using OLS regression
+and an Oaxaca-Blinder decomposition, separating the raw gap into
+explained (endowment) and unexplained (returns) components.
+
+- **Data:** Synthetic cross-sectional wage data with experience,
+  education, gender, and industry controls
+```bash
 python labor_econ/wage_gap_analysis/wage_gap.py
-python labor_law_compliance/wage_hour_audit/wage_hour_audit.py
-python bls_programs/qcew_ces_mock/qcew_ces_mock.py
+```
 
-## Repository Structure 
+---
+
+### Compliance and Timesheet Risk Analytics
+
+**Folder:** `labor_law_compliance/wage_hour_audit/`
+
+Identifies wage and hour compliance exposure — including overtime
+violations and time-rounding liability — from synthetic timesheet
+data modeled on real DOL audit structures.
+
+- **Output:** Department-level risk rankings, estimated back-wage
+  liability, and Tableau-ready CSVs
+```bash
+python labor_law_compliance/wage_hour_audit/wage_hour_audit.py
+```
+
+---
+
+### Econometrics Suite
+
+**Folder:** `econometrics/`
+
+Full applied econometrics toolkit covering the core identification
+strategies used in empirical economics and policy research.
+
+| Subfolder | Method |
+|---|---|
+| `linear_regression/` | OLS estimation and diagnostics |
+| `lpm_logit_probit/` | Binary outcome models |
+| `iv_2sls/` | Instrumental variables / 2SLS |
+| `panel_fixed_random/` | Fixed and random effects |
+| `diff_in_diff/` | Difference-in-differences |
+| `rd_design/` | Regression discontinuity |
+| `psm_matching/` | Propensity score matching |
+| `heteroskedasticity_robust_inference/` | Robust standard errors |
+```bash
+python econometrics/iv_2sls/iv_2sls.py
+python econometrics/rd_design/rd_design.py
+python econometrics/panel_fixed_random/panel_fe.py
+```
+
+---
+
+### Regularized Regression
+
+**Folder:** `regression/`
+
+Compares Ridge regression against OLS on a synthetic labor market
+dataset with correlated predictors, demonstrating regularization,
+coefficient shrinkage paths, and cross-validated hyperparameter
+selection.
+```bash
+python regression/regularized_employment_regression.py
+```
+
+---
+
+### Deep Learning — Income Classifier
+
+**Folder:** `deep_learning/`
+
+Feed-forward neural network (PyTorch MLP) classifying individuals
+into high vs. non-high income categories from demographic and human
+capital features; compared against a logistic regression baseline
+using ROC-AUC.
+```bash
+python deep_learning/pytorch_income_classifier.py
+```
+
+---
+
+### Credit Risk Classification
+
+**Folder:** `ml/`
+
+Logistic regression and random forest classifiers applied to a
+synthetic credit risk dataset; evaluated on ROC-AUC, precision-recall,
+and feature importance to illustrate how ML methods complement
+econometric approaches in risk modeling.
+```bash
+python ml/sklearn_credit_risk_model.py
+```
+
+---
+
+### Solow Growth Model
+
+**Folder:** `macro_models/solow_growth/`
+
+Simulates capital accumulation and convergence to steady state under
+the Solow-Swan neoclassical growth framework, with sensitivity
+analysis across savings rates and identification of the golden rule.
+```bash
+python macro_models/solow_growth/solow.py
+```
+
+---
+
+### CES Demand Estimation
+
+**Folder:** `micro_models/ces_demand/`
+
+Simulates consumer choice under a CES utility function and recovers
+the elasticity of substitution via non-linear least squares, with
+visualization of indifference curves and demand responses to price
+changes.
+```bash
+python micro_models/ces_demand/ces_utility.py
+```
+
+---
+
+### BLS QCEW/CES Mock Program
+
+**Folder:** `bls_programs/qcew_ces_mock/`
+
+Generates synthetic quarterly employment and wage data structured
+to match BLS QCEW and CES field definitions, enabling reproducible
+development of regional labor market analytics pipelines without
+live API access.
+```bash
+python bls_programs/qcew_ces_mock/qcew_ces_mock.py
+```
+
+---
+
+## Tableau Dashboards
+
+Three story-driven Tableau dashboards built on the synthetic datasets
+in `data/processed/`. Screenshots in `tableau/screenshots/`.
+
+| Dashboard | Data Source |
+|---|---|
+| Labor Market & Wage Analytics | `wages_synthetic.csv` |
+| Compliance & Timesheet Risk Analytics | `timesheets_synthetic.csv` |
+| Macro & Time-Series Economic Trends | `gdp_growth_synthetic.csv`, `garch_like_returns.csv`, `var_cointegration.csv` |
+
+---
+
+## Synthetic Datasets
+
+All datasets are auto-generated by their corresponding scripts and
+saved to `data/processed/`. Run the script to regenerate any file.
+
+| File | Generated by | Description |
+|---|---|---|
+| `wages_synthetic.csv` | `labor_econ/wage_gap_analysis/wage_gap.py` | Cross-sectional wage data with experience, education, gender, industry |
+| `timesheets_synthetic.csv` | `labor_law_compliance/wage_hour_audit/wage_hour_audit.py` | Timesheet panel with hours, rounding, overtime, payroll |
+| `employment_qcew_mock.csv` | `bls_programs/qcew_ces_mock/qcew_ces_mock.py` | QCEW-structured quarterly employment and wages |
+| `solow_simulation.csv` | `macro_models/solow_growth/solow.py` | Capital, output, consumption convergence paths |
+| `ces_utility_sim.csv` | `micro_models/ces_demand/ces_utility.py` | CES demand data across price and income levels |
+| `gdp_growth_synthetic.csv` | `time_series/arima_gdp/arima_simulated.py` | AR(1)-style GDP growth series |
+| `garch_like_returns.csv` | `time_series/garch_volatility/garch_demo.py` | Financial returns with GARCH volatility path |
+| `var_cointegration.csv` | `time_series/var_irf_cointegration/var_irf_coint.py` | Two cointegrated macroeconomic series |
+| `bayes_policy_effect.csv` | `bayesian/bayes_posterior_policy_effect.py` | Treated/control outcomes for Bayesian update |
+| `did_policy_sim.csv` | `causal_inference/diff_in_diff_policy_evaluation.py` | Panel DiD simulation data |
+| `credit_risk_synthetic.csv` | `ml/sklearn_credit_risk_model.py` | Synthetic borrower data for credit classification |
+| `income_classifier_data.csv` | `deep_learning/pytorch_income_classifier.py` | Demographic features for income classification |
+| `bls_metro_employment.csv` | `geographic_market_forecasting/fetch_bls_data.py` | Real BLS CES employment data for 20 U.S. metros |
+| `holdout_forecast_results.csv` | `geographic_market_forecasting/geo_market_forecast.py` | Predicted vs. actual employment — holdout metros |
+
+---
+
+## Repository Structure
+```
+geographic_market_forecasting/
 macro_models/
   └── solow_growth/
 micro_models/
@@ -108,203 +346,62 @@ time_series/
   └── garch_volatility/
 labor_econ/
   └── wage_gap_analysis/
-    wage_gap.py
 labor_law_compliance/
   └── wage_hour_audit/
 bls_programs/
   └── qcew_ces_mock/
 causal_inference/
 bayesian/
-└── bayesian_inference/
-ml/
-  └── sklearn_models/
-deep_learning/
 regression/
+ml/
+deep_learning/
 data/
-  └── processed/          
+  ├── raw/
+  └── processed/
 notebooks/
-scripts/
 tableau/
-  └── screenshots/   
+  └── screenshots/
 tests/
-tools/
 .github/
   └── workflows/
-
-## Requirements <requirements.txt>
-numpy>=1.24,<3.0
-pandas>=2.0,<3.0
-scipy>=1.10,<2.0
-statsmodels>=0.14,<0.15
-scikit-learn
-matplotlib
-arch
-linearmodels
-
-Testing & Linting
-# Tests (if tests/ exists)
-python -m pip install pytest
-pytest -q
-
-# Lint
-python -m pip install flake8
-flake8 .
-[flake8]
-exclude = .git,__pycache__,.github,venv,env
-max-line-length = 100
-
-Contributing
-PRs and issues welcome. Please format with Black and pass flake8 before submitting.
-
-License
-MIT License — see LICENSE for details.
-
-## Synthetic Datasets (Auto-Generated via Python Scripts)
-This portfolio includes a suite of reproducible synthetic datasets generated by purpose-built Python scripts. These datasets mirror real-world structures seen in labor economics, compliance analytics, corporate forecasting, and macroeconomic time-series work. All CSVs are programmatically created and saved to:
-data/processed/
-
-## Below is a reference guide to every dataset, the script that produces it, and typical use cases.
-
-# Labor Economics & Compliance
-wages_synthetic.csv
-Generated by: labor_econ/wage_gap_analysis/wage_gap.py
-Description:
-Simulated cross-sectional wage data containing years of experience, education, gender, and industry dummies. Used for wage regression, decomposition, and OLS demonstrations.
-timesheets_synthetic.csv
-Generated by: labor_econ/wage_hour_audit.py
-Description:
-A realistic timesheet panel including hours worked, rounding increments, overtime, department assignment, and payroll estimates.
-Use cases:
-Wage & hour compliance analysis
-Overtime cost modeling
-Rounding impact dashboards (Storyboard 2)
-
-# Industry, Employment, and Growth Analytics
-employment_qcew_mock.csv
-Generated by: macro/qcew_ces_mock.py
-Description:
-Quarterly industry employment and wage data modeled on BLS QCEW/CES fields.
-Use cases:
-Trends dashboards
-Industry comparison
-Growth decomposition
-solow_simulation.csv
-Generated by: macro/solow.py
-Description:
-Simulated Solow model with capital, output, and consumption paths.
-Use cases:
-Growth theory visualization
-Policy sensitivity analysis
-Teaching/academic applications
-
-# Microeconomics & Behavioral Modeling
-ces_utility_sim.csv
-Generated by: micro/ces_utility.py
-Description:
-CES utility and demand data across consumers with varying prices and income levels.
-Use cases:
-Consumer behavior modeling
-Utility surfaces / indifference curves
-Microeconomic fundamentals
-
-# Time-Series, Forecasting & Financial Econometrics
-gdp_growth_synthetic.csv
-Generated by: time_series/arima_simulated.py
-Description:
-AR(1)-style GDP growth series with cumulative index.
-Use cases:
-Forecasting demonstrations
-Trend & shock visualizations
-GDP dashboards (Storyboard 3)
-garch_like_returns.csv
-Generated by: time_series/garch_demo.py
-Description:
-Financial returns and volatility paths from a GARCH(1,1)-like model.
-Use cases:
-Risk dashboards
-Volatility modeling
-
-# Portfolio analytics demos
-var_cointegration.csv
-Generated by: time_series/var_irf_coint.py
-Description:
-Two cointegrated series that track long-run equilibrium relationships.
-Use cases:
-VAR estimation
-IRF visualization
-Cointegration testing (Storyboard 3)
-All datasets are reproducible — simply run the corresponding script from the project root:
-python path/to/script.py
-
-## Tableau Storyboards
-
-This repository includes three Tableau story-driven dashboards built on the synthetic datasets in `data/processed/`.
-
-1. **Labor Market & Wage Analytics (Storyboard 1)**  
-   - Workbook: `tableau/Storyboard1_Labor_Market_Wage_Analytics.twbx`  
-   - Data: `data/processed/wages_synthetic.csv`  
-
-2. **Compliance & Timesheet Risk Analytics (Storyboard 2)**  
-   - Workbook: `tableau/Storybboard2_Compliance_Timesheet_Risk.twbx`  
-   - Data: `data/processed/timesheets_synthetic.csv`  
-
-3. **Macro & Time-Series Economic Trends (Storyboard 3)**  
-   - Workbook: `tableau/Storyboard3_Macro_Time_Series_Trends.twbx`  
-   - Data:  
-     - `data/processed/gdp_growth_synthetic.csv`  
-     - `data/processed/garch_like_returns.csv`  
-     - `data/processed/var_cointegration.csv`
-
-## Advanced Inference & Machine Learning Projects
-
-This portfolio also includes a set of advanced, production-style examples that bridge traditional econometrics with modern machine learning and Bayesian methods.
-
-### Bayesian Inference
-
-- **Script:** `bayesian/bayes_posterior_policy_effect.py`  
-- **Dataset:** `data/processed/bayes_policy_effect.csv`  
-- **Description:**  
-  Simulates a simple policy evaluation setting (treated vs. control group) and applies a conjugate normal–normal Bayesian update to estimate the posterior distribution of the treatment effect. Demonstrates the relationship between classical diff-in-means estimators and Bayesian posterior inference.
-
-### Regularized Regression Modeling
-
-- **Script:** `regression/regularized_employment_regression.py`  
-- **Dataset:** `data/processed/regularized_employment_regression.csv`  
-- **Description:**  
-  Generates a synthetic employment-related wage dataset and fits both OLS and Ridge regression models using scikit-learn. Designed to illustrate regularization, multicollinearity, and model comparison in an applied labor economics context.
-
-### Causal Inference (Difference-in-Differences)
-
-- **Script:** `causal_inference/diff_in_diff_policy_evaluation.py`  
-- **Dataset:** `data/processed/did_policy_sim.csv`  
-- **Description:**  
-  Implements a two-way panel difference-in-differences setup with treated and control units before and after a policy change. Estimates a DiD model using statsmodels, providing a clean example of policy evaluation with simulated data.
-
-### Deep Learning with PyTorch
-
-- **Script:** `deep_learning/pytorch_income_classifier.py`  
-- **Dataset:** `data/processed/income_classifier_data.csv`  
-- **Description:**  
-  Builds a simple feed-forward neural network in PyTorch to classify individuals into high vs. non-high income categories based on age, education, and experience. Includes a minimal training loop and evaluation output, demonstrating MLPs and modern DL tooling on tabular data.
-
-### Machine Learning with scikit-learn
-
-- **Script:** `ml/sklearn_credit_risk_model.py`  
-- **Dataset:** `data/processed/credit_risk_synthetic.csv`  
-- **Description:**  
-  Simulates a credit risk classification problem and fits both Logistic Regression and Random Forest models using scikit-learn. Evaluates model performance using ROC AUC and classification metrics, illustrating how ML methods complement econometric approaches in risk modeling and decision support.
+```
 
 ---
 
-All of these scripts are designed to be:
-
-- **Reproducible:** They generate their own synthetic datasets in `data/processed/`.
-- **Self-contained:** They can be run from the repository root using `python path/to/script.py`.
-- **Portfolio-ready:** Each example aligns with real-world use cases in economic research, policy analysis, compliance analytics, and risk modeling.
-
 ## Tech Stack
-Languages: Python, R, SQL
-Libraries: pandas, NumPy, scikit-learn, statsmodels, PyTorch
-Visualization: Tableau, Power BI, Matplotlib
-Modeling: OLS, Ridge, ARIMA, VAR, GARCH, Bayesian Inference, Causal DiD
-Tools: Git, Jupyter Notebooks, GitHub Actions
+
+| Category | Tools |
+|---|---|
+| **Languages** | Python, R, SQL |
+| **Econometrics** | statsmodels, linearmodels |
+| **Machine Learning** | scikit-learn, PyTorch |
+| **Time-Series** | statsmodels, arch |
+| **Data** | pandas, NumPy, SciPy |
+| **Visualization** | Tableau, Power BI, matplotlib, seaborn |
+| **Workflow** | Git, Jupyter, GitHub Actions, Makefile |
+
+---
+
+## Testing and Linting
+```bash
+# Run tests
+pytest -q
+
+# Lint
+flake8 .
+```
+
+---
+
+## License
+
+MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+## Contact
+
+**Alex Strong**
+[strong.nalex@gmail.com](mailto:strong.nalex@gmail.com) ·
+[LinkedIn](https://linkedin.com/in/alex-s-b049a4390) ·
+[GitHub](https://github.com/alexstrong76)
