@@ -77,3 +77,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import os
+os.makedirs("bayesian/figures", exist_ok=True)
+
+plt.savefig("bayesian/figures/bayes_posterior.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: bayesian/figures/bayes_posterior.png")
