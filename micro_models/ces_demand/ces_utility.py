@@ -58,3 +58,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import os
+os.makedirs("micro_models/figures", exist_ok=True)
+
+plt.savefig("micro_models/figures/ces_indifference.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: micro_models/figures/ces_indifference.png")
