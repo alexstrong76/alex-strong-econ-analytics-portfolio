@@ -41,13 +41,44 @@ def main():
     print(f"Saved VAR/cointegration data to: {out_path.resolve()}")
     print(df.head())
 
-
 if __name__ == "__main__":
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import pandas as pd
+    import os
+
     main()
 
-import os
-os.makedirs("time_series/figures", exist_ok=True)
+    os.makedirs("time_series/figures", exist_ok=True)
 
-plt.savefig("time_series/figures/var_irf.png", dpi=150, bbox_inches="tight")
-plt.close()
-print("Saved: time_series/figures/var_irf.png")
+    df = pd.read_csv("data/processed/var_cointegration.csv")
+    cols = [c for c in df.columns if c != "period"][:2]
+    s1, s2 = df[cols[0]].values, df[cols[1]].values
+    t = np.arange(len(s1))
+
+    fig, axes = plt.subplots(2, 1, figsize=(10, 7), sharex=True)
+    axes[0].plot(t, s1, color="#1B4F8A", linewidth=1.5, label=cols[0])
+    axes[0].plot(t, s2, color="#E8593C", linewidth=1.5,
+                 linestyle="--", label=cols[1])
+    axes[0].set_title("VAR / Cointegration — Two Cointegrated Series",
+                      fontsize=12, fontweight="bold")
+    axes[0].legend(fontsize=9)
+    axes[0].grid(True, alpha=0.3)
+    axes[0].set_ylabel("Level", fontsize=10)
+
+    spread = s1 - s2
+    axes[1].plot(t, spread, color="#0F6E56", linewidth=1.5)
+    axes[1].axhline(spread.mean(), color="#888", linestyle="--", linewidth=1)
+    axes[1].set_title("Spread (Series 1 - Series 2) — Mean-reverting behavior",
+                      fontsize=11)
+    axes[1].set_xlabel("Period", fontsize=10)
+    axes[1].set_ylabel("Spread", fontsize=10)
+    axes[1].grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    path = "time_series/figures/var_irf.png"
+    fig.savefig(path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved: {path}")

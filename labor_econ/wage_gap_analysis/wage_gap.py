@@ -82,13 +82,66 @@ def main():
     df.to_csv(out_path, index=False)
     print(f"\nSaved synthetic wage dataset to: {out_path.resolve()}")
 
-
 if __name__ == "__main__":
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    import numpy as np
+    import os
+
     main()
 
-import os
-os.makedirs("labor_econ/wage_gap_analysis/figures", exist_ok=True)
+    os.makedirs("labor_econ/wage_gap_analysis/figures", exist_ok=True)
 
-plt.savefig("labor_econ/wage_gap_analysis/figures/wage_distribution.png", dpi=150, bbox_inches="tight")
-plt.close()
-print("Saved: labor_econ/wage_gap_analysis/figures/wage_distribution.png")
+    df = pd.read_csv("data/processed/wages_synthetic.csv")
+    wage_col = [c for c in df.columns if "wage" in c.lower() or
+                "earn" in c.lower() or "salary" in c.lower() or
+                "income" in c.lower() or "pay" in c.lower()][0]                if any("wage" in c.lower() or "earn" in c.lower() or
+                      "salary" in c.lower() or "income" in c.lower() or
+                      "pay" in c.lower() for c in df.columns)                else df.select_dtypes(include=[np.number]).columns[0]
+    group_col = [c for c in df.columns if "gender" in c.lower() or
+                 "group" in c.lower() or "female" in c.lower() or
+                 "sex" in c.lower()]
+    group_col = group_col[0] if group_col else None
+
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+    axes[0].hist(df[wage_col], bins=40, color="#1B4F8A",
+                 edgecolor="white", alpha=0.8)
+    axes[0].set_xlabel("Wage", fontsize=10)
+    axes[0].set_ylabel("Count", fontsize=10)
+    axes[0].set_title("Wage Distribution\nAll workers", fontsize=11,
+                      fontweight="bold")
+    axes[0].grid(True, alpha=0.3)
+
+    if group_col:
+        groups = df[group_col].unique()
+        colors = ["#1B4F8A", "#E8593C", "#0F6E56", "#BA7517"]
+        for i, g in enumerate(sorted(groups)):
+            sub = df[df[group_col] == g][wage_col]
+            axes[1].hist(sub, bins=30, alpha=0.6,
+                         color=colors[i % len(colors)],
+                         edgecolor="white", label=f"Group {g}")
+        axes[1].legend(fontsize=9)
+        axes[1].set_title("Wage Distribution by Group\nGap visualization",
+                          fontsize=11, fontweight="bold")
+    else:
+        exp_col = [c for c in df.columns if "exp" in c.lower() or
+                   "tenure" in c.lower() or "year" in c.lower()]
+        exp_col = exp_col[0] if exp_col else df.select_dtypes(
+            include=[np.number]).columns[1]
+        axes[1].scatter(df[exp_col], df[wage_col],
+                        alpha=0.3, color="#1B4F8A", s=10)
+        axes[1].set_xlabel(exp_col, fontsize=10)
+        axes[1].set_title(f"Wage vs {exp_col}", fontsize=11,
+                          fontweight="bold")
+    axes[1].set_xlabel("Wage", fontsize=10)
+    axes[1].set_ylabel("Count", fontsize=10)
+    axes[1].grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    path = "labor_econ/wage_gap_analysis/figures/wage_distribution.png"
+    fig.savefig(path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved: {path}")

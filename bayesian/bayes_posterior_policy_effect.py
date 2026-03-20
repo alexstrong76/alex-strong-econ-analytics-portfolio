@@ -74,13 +74,56 @@ def main():
 
     print(f"Saved Bayesian policy dataset to: {out_path.resolve()}")
 
-
 if __name__ == "__main__":
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import os
+
     main()
 
-import os
-os.makedirs("bayesian/figures", exist_ok=True)
+    os.makedirs("bayesian/figures", exist_ok=True)
 
-plt.savefig("bayesian/figures/bayes_posterior.png", dpi=150, bbox_inches="tight")
-plt.close()
-print("Saved: bayesian/figures/bayes_posterior.png")
+    # Reconstruct posterior for plotting
+    rng = np.random.default_rng(42)
+    n_control, n_treated = 50, 50
+    mu_control = rng.normal(5.0, 1.5, n_control)
+    mu_treated = rng.normal(7.5, 1.5, n_treated)
+    prior_mean, prior_var = 0.0, 10.0
+    obs_var = 1.5 ** 2
+    n = n_treated
+    obs_mean = mu_treated.mean() - mu_control.mean()
+    post_var  = 1.0 / (1.0 / prior_var + n / obs_var)
+    post_mean = post_var * (prior_mean / prior_var + n * obs_mean / obs_var)
+    post_sd   = np.sqrt(post_var)
+
+    x = np.linspace(post_mean - 5*post_sd, post_mean + 5*post_sd, 400)
+    from scipy.stats import norm
+    prior_pdf    = norm.pdf(x, prior_mean, np.sqrt(prior_var))
+    posterior_pdf = norm.pdf(x, post_mean, post_sd)
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.plot(x, prior_pdf, color="#888888", linewidth=1.5,
+            linestyle="--", label="Prior")
+    ax.plot(x, posterior_pdf, color="#1B4F8A", linewidth=2.5,
+            label=f"Posterior (mean={post_mean:.2f}, sd={post_sd:.2f})")
+    ax.axvline(post_mean, color="#1B4F8A", linestyle=":", linewidth=1.2)
+    lo, hi = norm.ppf(0.025, post_mean, post_sd), norm.ppf(0.975, post_mean, post_sd)
+    ax.fill_between(x, posterior_pdf,
+                    where=(x >= lo) & (x <= hi),
+                    alpha=0.15, color="#1B4F8A",
+                    label=f"95% credible interval [{lo:.2f}, {hi:.2f}]")
+    ax.axvline(0, color="#E8593C", linewidth=1, linestyle="-.",
+               label="No effect (0)")
+    ax.set_xlabel("Treatment effect (tau)", fontsize=11)
+    ax.set_ylabel("Density", fontsize=11)
+    ax.set_title("Bayesian Policy Evaluation\nPosterior distribution of treatment effect",
+                 fontsize=12, fontweight="bold")
+    ax.legend(fontsize=9)
+    ax.grid(True, alpha=0.3)
+    plt.tight_layout()
+    path = "bayesian/figures/bayes_posterior.png"
+    fig.savefig(path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved: {path}")

@@ -71,13 +71,78 @@ def main():
     print(f"Saved timesheet data to: {out_path.resolve()}")
     print(df.head())
 
-
 if __name__ == "__main__":
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    import numpy as np
+    import os
+
     main()
 
-import os
-os.makedirs("labor_law_compliance/wage_hour_audit/figures", exist_ok=True)
+    os.makedirs("labor_law_compliance/wage_hour_audit/figures", exist_ok=True)
 
-plt.savefig("labor_law_compliance/wage_hour_audit/figures/overtime_by_dept.png", dpi=150, bbox_inches="tight")
-plt.close()
-print("Saved: labor_law_compliance/wage_hour_audit/figures/overtime_by_dept.png")
+    df = pd.read_csv("data/processed/timesheets_synthetic.csv")
+    dept_col = [c for c in df.columns if "dept" in c.lower() or
+                "department" in c.lower() or "division" in c.lower()]
+    dept_col = dept_col[0] if dept_col else None
+    hours_col = [c for c in df.columns if "hour" in c.lower() or
+                 "hrs" in c.lower()]
+    hours_col = hours_col[0] if hours_col else                 df.select_dtypes(include=[np.number]).columns[0]
+    ot_col = [c for c in df.columns if "over" in c.lower() or
+              "ot" in c.lower()]
+    ot_col = ot_col[0] if ot_col else None
+
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+
+    if dept_col:
+        dept_means = df.groupby(dept_col)[hours_col].mean().sort_values(
+            ascending=True)
+        colors = ["#E8593C" if v > 40 else "#1B4F8A"
+                  for v in dept_means.values]
+        axes[0].barh(dept_means.index, dept_means.values,
+                     color=colors, edgecolor="none", height=0.6)
+        axes[0].axvline(40, color="#333", linestyle="--",
+                        linewidth=1, label="40-hr threshold")
+        axes[0].set_xlabel("Average hours worked", fontsize=10)
+        axes[0].set_title("Average Hours by Department\nRed = above 40-hr threshold",
+                          fontsize=11, fontweight="bold")
+        axes[0].legend(fontsize=9)
+        axes[0].grid(True, axis="x", alpha=0.3)
+    else:
+        axes[0].hist(df[hours_col], bins=30, color="#1B4F8A",
+                     edgecolor="white")
+        axes[0].axvline(40, color="#E8593C", linestyle="--",
+                        linewidth=1.5, label="40-hr threshold")
+        axes[0].set_xlabel("Hours worked", fontsize=10)
+        axes[0].set_ylabel("Count", fontsize=10)
+        axes[0].set_title("Hours Distribution", fontsize=11,
+                          fontweight="bold")
+        axes[0].legend(fontsize=9)
+        axes[0].grid(True, alpha=0.3)
+
+    if ot_col:
+        ot_vals = df[ot_col]
+        axes[1].hist(ot_vals, bins=30, color="#E8593C",
+                     edgecolor="white", alpha=0.8)
+        axes[1].set_xlabel("Overtime hours", fontsize=10)
+        axes[1].set_ylabel("Count", fontsize=10)
+        axes[1].set_title("Overtime Hours Distribution\nCompliance risk exposure",
+                          fontsize=11, fontweight="bold")
+        axes[1].grid(True, alpha=0.3)
+    else:
+        excess = (df[hours_col] - 40).clip(lower=0)
+        axes[1].hist(excess[excess > 0], bins=30,
+                     color="#E8593C", edgecolor="white", alpha=0.8)
+        axes[1].set_xlabel("Hours over 40", fontsize=10)
+        axes[1].set_ylabel("Count", fontsize=10)
+        axes[1].set_title("Excess Hours Distribution\nCompliance risk exposure",
+                          fontsize=11, fontweight="bold")
+        axes[1].grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    path = "labor_law_compliance/wage_hour_audit/figures/overtime_by_dept.png"
+    fig.savefig(path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved: {path}")

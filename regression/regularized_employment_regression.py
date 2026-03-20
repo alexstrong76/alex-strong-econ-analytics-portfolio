@@ -74,13 +74,74 @@ def main():
 
     print(f"Saved regression dataset to: {out_path.resolve()}")
 
-
 if __name__ == "__main__":
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    import numpy as np
+    import os
+    from sklearn.linear_model import Ridge, LinearRegression
+    from sklearn.preprocessing import StandardScaler
+
     main()
 
-import os
-os.makedirs("regression/figures", exist_ok=True)
+    os.makedirs("regression/figures", exist_ok=True)
 
-plt.savefig("regression/figures/ridge_coef_path.png", dpi=150, bbox_inches="tight")
-plt.close()
-print("Saved: regression/figures/ridge_coef_path.png")
+    df = pd.read_csv("data/processed/regularized_employment_regression.csv")
+    num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+    target = num_cols[0]
+    features = num_cols[1:] if len(num_cols) > 1 else num_cols
+
+    X = df[features].values
+    y = df[target].values
+    scaler = StandardScaler()
+    X_s = scaler.fit_transform(X)
+
+    alphas = np.logspace(-3, 4, 60)
+    coefs  = []
+    for a in alphas:
+        r = Ridge(alpha=a).fit(X_s, y)
+        coefs.append(r.coef_)
+    coefs = np.array(coefs)
+
+    ols   = LinearRegression().fit(X_s, y)
+    ridge = Ridge(alpha=1.0).fit(X_s, y)
+
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+
+    for j in range(coefs.shape[1]):
+        axes[0].plot(np.log10(alphas), coefs[:, j],
+                     linewidth=1.2, alpha=0.8)
+    axes[0].axvline(0, color="#333", linestyle="--",
+                    linewidth=1, label="alpha=1 (log10=0)")
+    axes[0].set_xlabel("log10(alpha) — regularization strength", fontsize=10)
+    axes[0].set_ylabel("Coefficient value", fontsize=10)
+    axes[0].set_title("Ridge Regression Coefficient Shrinkage Path\n"
+                      "Each line = one feature",
+                      fontsize=11, fontweight="bold")
+    axes[0].legend(fontsize=9)
+    axes[0].grid(True, alpha=0.3)
+
+    feat_labels = features if len(features) <= 10 else                   [f"f{i}" for i in range(len(features))]
+    x_pos = np.arange(len(feat_labels))
+    w = 0.35
+    axes[1].bar(x_pos - w/2, ols.coef_, width=w,
+                color="#1B4F8A", label="OLS", alpha=0.85)
+    axes[1].bar(x_pos + w/2, ridge.coef_, width=w,
+                color="#E8593C", label="Ridge (alpha=1)", alpha=0.85)
+    axes[1].set_xticks(x_pos)
+    axes[1].set_xticklabels(feat_labels, rotation=30, ha="right", fontsize=9)
+    axes[1].set_ylabel("Coefficient", fontsize=10)
+    axes[1].set_title("OLS vs Ridge Coefficients\n"
+                      "Ridge shrinks toward zero",
+                      fontsize=11, fontweight="bold")
+    axes[1].legend(fontsize=9)
+    axes[1].axhline(0, color="#333", linewidth=0.8)
+    axes[1].grid(True, axis="y", alpha=0.3)
+
+    plt.tight_layout()
+    path = "regression/figures/ridge_coef_path.png"
+    fig.savefig(path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved: {path}")
