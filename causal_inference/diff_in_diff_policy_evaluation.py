@@ -65,3 +65,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+import os
+os.makedirs("causal_inference/figures", exist_ok=True)
+
+plt.savefig("causal_inference/figures/did_parallel_trends.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: causal_inference/figures/did_parallel_trends.png")
