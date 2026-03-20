@@ -19,4 +19,9 @@ res = sm.OLS(local["y"], X).fit(cov_type="HC1")
 print(res.summary())
 print("\nLocal RD (t coefficient):", res.params[2])
 
+import os
+os.makedirs("econometrics/figures", exist_ok=True)
 
+plt.savefig("econometrics/figures/rd_discontinuity.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: econometrics/figures/rd_discontinuity.png")
