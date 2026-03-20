@@ -44,3 +44,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import os
+os.makedirs("time_series/figures", exist_ok=True)
+
+plt.savefig("time_series/figures/var_irf.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: time_series/figures/var_irf.png")
