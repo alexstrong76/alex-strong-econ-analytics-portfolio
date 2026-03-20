@@ -1,6 +1,0 @@
-
-Append to dev-requirements.txt:
-pytest
-linearmodels
-arch
-nbformat
